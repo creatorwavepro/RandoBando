@@ -103,6 +103,8 @@ using Azure.Security.KeyVault.Secrets;
 
     public static async Task<string> SetAzureDatabaseConnectionccountKey()
     {
+        string s = "";
+
         // Replace <Your-Key-Vault-URL> with the URL of your Key Vault
         // Replace <Your-Secret-Name> with the name of the secret that holds the storage account connection string
         try
