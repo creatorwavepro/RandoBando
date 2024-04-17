@@ -24,7 +24,7 @@ using Azure.Security.KeyVault.Secrets;
         {
 
       
-        var keyVaultUrl = new Uri("https://socialflowkeyvault.vault.azure.net/");
+        var keyVaultUrl = new Uri("https://kevault-west-europe.vault.azure.net/");
         var secretName = "ApiOpenAIsecretKey";
 
         // Build a secret client using the DefaultAzureCredential which uses the managed identity or service principal
@@ -50,9 +50,8 @@ using Azure.Security.KeyVault.Secrets;
         // Replace <Your-Secret-Name> with the name of the secret that holds the storage account connection string
         try
         {
-
-       
-        var keyVaultUrl = new Uri("https://socialflowkeyvault.vault.azure.net/");
+      
+        var keyVaultUrl = new Uri("https://kevault-west-europe.vault.azure.net/");
         var secretName = "ApiStabilityAIKey";
 
         // Build a secret client using the DefaultAzureCredential which uses the managed identity or service principal
@@ -80,7 +79,7 @@ using Azure.Security.KeyVault.Secrets;
         {
 
 
-        var keyVaultUrl = new Uri("https://socialflowkeyvault.vault.azure.net/");
+        var keyVaultUrl = new Uri("https://kevault-west-europe.vault.azure.net/");
         var secretName = "AzureConnectinoStringStorageAccount";
 
         // Build a secret client using the DefaultAzureCredential which uses the managed identity or service principal
@@ -109,7 +108,7 @@ using Azure.Security.KeyVault.Secrets;
         try
         {
 
-        var keyVaultUrl = new Uri("https://socialflowkeyvault.vault.azure.net/");
+        var keyVaultUrl = new Uri("https://kevault-west-europe.vault.azure.net/");
         var secretName = "AzureConnectinoStringDataBase";
 
         // Build a secret client using the DefaultAzureCredential which uses the managed identity or service principal
@@ -137,7 +136,7 @@ using Azure.Security.KeyVault.Secrets;
         {
 
        
-        var keyVaultUrl = new Uri("https://socialflowkeyvault.vault.azure.net/");
+        var keyVaultUrl = new Uri("https://kevault-west-europe.vault.azure.net/");
         var secretName = "SystemPasswordEmail";
 
         // Build a secret client using the DefaultAzureCredential which uses the managed identity or service principal
@@ -165,7 +164,7 @@ using Azure.Security.KeyVault.Secrets;
         {
 
       
-        var keyVaultUrl = new Uri("https://socialflowkeyvault.vault.azure.net/");
+        var keyVaultUrl = new Uri("https://kevault-west-europe.vault.azure.net/");
         var secretName = "SystemSecretKeyJwtEncrption";
 
         // Build a secret client using the DefaultAzureCredential which uses the managed identity or service principal
@@ -193,7 +192,7 @@ using Azure.Security.KeyVault.Secrets;
 
        
 
-        var keyVaultUrl = new Uri("https://socialflowkeyvault.vault.azure.net/");
+        var keyVaultUrl = new Uri("https://kevault-west-europe.vault.azure.net/");
         var secretName = "SystemSecretKeySecurelyExtraEncryptJwtTokenHex";
 
         // Build a secret client using the DefaultAzureCredential which uses the managed identity or service principal
@@ -223,7 +222,7 @@ using Azure.Security.KeyVault.Secrets;
 
 
 
-            var keyVaultUrl = new Uri("https://socialflowkeyvault.vault.azure.net/");
+            var keyVaultUrl = new Uri("https://kevault-west-europe.vault.azure.net/");
             var secretName = "StripeSecretKey";
 
             // Build a secret client using the DefaultAzureCredential which uses the managed identity or service principal
