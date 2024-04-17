@@ -15,16 +15,17 @@ namespace FunctionAppCreateClips
         private readonly ISecretsConfiguration _secretsConfiguration;
         private readonly IAzureStorageService _azureStorageService;
 
-
+        private readonly ILogger<Ffmpeg> _logger;
         private readonly HttpClient _httpClient;
 
-        public Ffmpeg(System.Net.Http.IHttpClientFactory httpClientFactory,IJwtTokenServices jwtTokenServices,  IVideoCreationServices videoCreationServices, ISecretsConfiguration secretsConfiguration, IAzureStorageService azureStorageService)
+        public Ffmpeg(ILogger<Ffmpeg> logger,System.Net.Http.IHttpClientFactory httpClientFactory,IJwtTokenServices jwtTokenServices,  IVideoCreationServices videoCreationServices, ISecretsConfiguration secretsConfiguration, IAzureStorageService azureStorageService)
         {
             _httpClient = httpClientFactory.CreateClient("MyCustomHttpClient");
             _jwtTokenServices = jwtTokenServices;
             _videoCreationServices = videoCreationServices; 
             _secretsConfiguration = secretsConfiguration;
             _azureStorageService = azureStorageService;
+            _logger = logger;
         }
 
 
@@ -47,9 +48,12 @@ namespace FunctionAppCreateClips
                 return new BadRequestObjectResult("An error occurred. The request body could not be deserialized.");
             }
 
+      
+
+
             if (! await _jwtTokenServices.IsValidJWTAsync(input.jwt))
             {
-                return new UnauthorizedObjectResult("invalid token");
+                return new UnauthorizedObjectResult("invalid token " + "invalid token " + "called create clips with token =>  " + input.jwt + "jwt token secret : " + _secretsConfiguration.MainJWTTokenKey);
             }
 
           
@@ -112,9 +116,11 @@ namespace FunctionAppCreateClips
                 return new BadRequestObjectResult("An error occurred. The request body could not be deserialized.");
             }
 
+   
+
             if (!await _jwtTokenServices.IsValidJWTAsync(input.jwt))
             {
-                return new UnauthorizedObjectResult("invalid token");
+                return new UnauthorizedObjectResult("invalid token " + "called create clips with token =>  " + input.jwt + "jwt token secret : " + _secretsConfiguration.MainJWTTokenKey);
             }
 
             // Prepare to download each video file to a local file, all simultaneously
