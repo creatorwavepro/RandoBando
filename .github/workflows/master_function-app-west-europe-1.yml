@@ -41,6 +41,7 @@ jobs:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E479681A3B9B48A181A7BE1CA6F01743 }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_27CDB7A75136416397AB55C0DB48CC83 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_058030B48A02411BAA6E83A278F186F7 }}
+          token: ${{ secrets.MY_GITHUB_TOKEN }}
 
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
