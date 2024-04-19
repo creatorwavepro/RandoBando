@@ -37,72 +37,72 @@ namespace FunctionAppCreateClips
         //    _logger = loggerFactory.CreateLogger<Ffmpeg>();
         //}
 
-        [Function("CreateClips")]
-        public async Task<IActionResult> CreateClips([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req)
-        {
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            CreateClipsClass input = JsonSerializer.Deserialize<CreateClipsClass>(requestBody);
+        //[Function("CreateClips")]
+        //public async Task<IActionResult> CreateClips([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req)
+        //{
+        //    string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+        //    CreateClipsClass input = JsonSerializer.Deserialize<CreateClipsClass>(requestBody);
 
-            if (input == null)
-            {
-                return new BadRequestObjectResult("An error occurred. The request body could not be deserialized.");
-            }
+        //    if (input == null)
+        //    {
+        //        return new BadRequestObjectResult("An error occurred. The request body could not be deserialized.");
+        //    }
 
       
 
 
-            if (! await _jwtTokenServices.IsValidJWTAsync(input.jwt))
-            {
-                return new UnauthorizedObjectResult("invalid token " + "invalid token " + "called create clips with token =>  " + input.jwt + "jwt token secret : " + _secretsConfiguration.MainJWTTokenKey);
-            }
+        //    if (! await _jwtTokenServices.IsValidJWTAsync(input.jwt))
+        //    {
+        //        return new UnauthorizedObjectResult("invalid token " + "invalid token " + "called create clips with token =>  " + input.jwt + "jwt token secret : " + _secretsConfiguration.MainJWTTokenKey);
+        //    }
 
           
 
-            string path = null;
-            int retries = 0;
-            int maxRetries = 3;
-            while (retries < maxRetries && (string.IsNullOrEmpty(path) || !path.Contains("http")))
-            {
+        //    string path = null;
+        //    int retries = 0;
+        //    int maxRetries = 3;
+        //    while (retries < maxRetries && (string.IsNullOrEmpty(path) || !path.Contains("http")))
+        //    {
 
 
-                path = await _videoCreationServices.GenerateVideoFromImageAndStoreLocally(input.FfmpegCommand) ;
+        //        path = await _videoCreationServices.GenerateVideoFromImageAndStoreLocally(input.FfmpegCommand) ;
 
-                if (!string.IsNullOrEmpty(path) && path.Contains("http"))
-                {
-                    break;
-                }
+        //        if (!string.IsNullOrEmpty(path) && path.Contains("http"))
+        //        {
+        //            break;
+        //        }
 
-                retries++;
-                // Exponential backoff formula: 2^retries * 100 milliseconds
-                int delay = (int)Math.Pow(2, retries) * 100;
-                await Task.Delay(delay);
-            }
+        //        retries++;
+        //        // Exponential backoff formula: 2^retries * 100 milliseconds
+        //        int delay = (int)Math.Pow(2, retries) * 100;
+        //        await Task.Delay(delay);
+        //    }
 
-            if (!string.IsNullOrEmpty(path) && path.Contains("http"))
-            {
-                return new OkObjectResult("https://blitzstoragewesteurope.blob.core.windows.net/finalfiles/clip-18c8d406-8509-45d3-9871-989896ab840e.mp4?sp=r&st=2024-04-19T12:48:37Z&se=2024-05-11T20:48:37Z&spr=https&sv=2022-11-02&sr=b&sig=x1v5uZ6gD70E%2BdNJEviDXfVmesrpmi79g7mRPNK4OiU%3D");
-            }
-            else
-            {
-                return new BadRequestObjectResult("Failed to create clip after retries.");
-            }
-        }
+        //    if (!string.IsNullOrEmpty(path) && path.Contains("http"))
+        //    {
+        //        return new OkObjectResult("https://blitzstoragewesteurope.blob.core.windows.net/finalfiles/clip-18c8d406-8509-45d3-9871-989896ab840e.mp4?sp=r&st=2024-04-19T12:48:37Z&se=2024-05-11T20:48:37Z&spr=https&sv=2022-11-02&sr=b&sig=x1v5uZ6gD70E%2BdNJEviDXfVmesrpmi79g7mRPNK4OiU%3D");
+        //    }
+        //    else
+        //    {
+        //        return new BadRequestObjectResult("Failed to create clip after retries.");
+        //    }
+        //}
 
-        public class CreateClipsClass
-        {
-            // JWT Token for verification
-            public string FfmpegCommand { get; set; }
-            public string jwt { get; set; }
-
-
+        //public class CreateClipsClass
+        //{
+        //    // JWT Token for verification
+        //    public string FfmpegCommand { get; set; }
+        //    public string jwt { get; set; }
 
 
-            public CreateClipsClass()
-            {
 
-            }
 
-        }
+        //    public CreateClipsClass()
+        //    {
+
+        //    }
+
+        //}
 
 
         [Function("JoinClips")]
