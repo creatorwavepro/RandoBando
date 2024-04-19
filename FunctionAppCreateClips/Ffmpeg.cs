@@ -43,8 +43,8 @@ namespace FunctionAppCreateClips
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             CreateClipsClass input = JsonSerializer.Deserialize<CreateClipsClass>(requestBody);
 
-            string limits = "sqss";
-            
+            string limits = "sq";
+
             if (input == null)
             {
                 return new BadRequestObjectResult("An error occurred. The request body could not be deserialized.");
@@ -82,7 +82,7 @@ namespace FunctionAppCreateClips
 
             if (!string.IsNullOrEmpty(path) && path.Contains("http"))
             {
-                return new OkObjectResult("https://blitzstoragewesteurope.blob.core.windows.net/finalfiles/clip-18c8d406-8509-45d3-9871-989896ab840e.mp4?sp=r&st=2024-04-19T12:48:37Z&se=2024-05-11T20:48:37Z&spr=https&sv=2022-11-02&sr=b&sig=x1v5uZ6gD70E%2BdNJEviDXfVmesrpmi79g7mRPNK4OiU%3D");
+                return new OkObjectResult(path);
             }
             else
             {
