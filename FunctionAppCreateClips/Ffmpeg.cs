@@ -43,8 +43,8 @@ namespace FunctionAppCreateClips
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             CreateClipsClass input = JsonSerializer.Deserialize<CreateClipsClass>(requestBody);
 
-            string limits = "sq";
-
+            string limits = "sqss";
+            
             if (input == null)
             {
                 return new BadRequestObjectResult("An error occurred. The request body could not be deserialized.");
