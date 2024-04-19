@@ -22,7 +22,7 @@ using Azure.Security.KeyVault.Secrets;
         // Replace <Your-Secret-Name> with the name of the secret that holds the storage account connection string
         try
         {
-            string s = "";
+            string s = "edesds";
       
         var keyVaultUrl = new Uri("https://kevault-west-europe.vault.azure.net/");
         var secretName = "ApiOpenAIsecretKey";
