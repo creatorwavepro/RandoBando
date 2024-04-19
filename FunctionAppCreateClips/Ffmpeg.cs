@@ -42,6 +42,8 @@ namespace FunctionAppCreateClips
         {
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             CreateClipsClass input = JsonSerializer.Deserialize<CreateClipsClass>(requestBody);
+            
+            string limits = "":
 
             if (input == null)
             {
