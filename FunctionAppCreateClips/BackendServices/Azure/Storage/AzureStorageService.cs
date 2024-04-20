@@ -13,8 +13,7 @@ public interface IAzureStorageService
     Task<Uri> UploadVideoToBlobAsync(string videoPath, string videoName, string containerName);
     Task<string> DownloadBlobAsTempFileAsync(Uri blobUri, string containerName);
     Task<string> GenerateBlobSasTokenAsync(Uri blobUri);
-    Task<string> DownloadFFMpegExecutable();
-    Task<string> DownloadBlobFFMPEG();
+
     Task<string> DownloadBlobAsTempFileAsyncWithExtension(Uri blobUri, string containerName, string extension);
     Task<Uri> UploadImageFromStream(Stream imageStream, string blobName, string containerName);
     Task<Uri> UploadVideoToBlobAsyncInChunks(string localFilePath, string blobName, string containerName);
@@ -322,53 +321,7 @@ public class AzureStorageService : IAzureStorageService
         return null;
     }
 
-    public async Task<string> DownloadBlobFFMPEG()
-    {
-        Uri ffmpegUri = new Uri("https://socialflowstorageaccount.blob.core.windows.net/finalfiles/ffmpeg.exe?sp=r&st=2024-03-17T15:26:46Z&se=2032-03-21T23:26:46Z&spr=https&sv=2022-11-02&sr=b&sig=hsUgCOpkkteSiMWNerohQm4l23zsMuHSf%2Bzukg6U0EE%3D");
-
-        // Extract the blob name from the URI
-        string blobName = WebUtility.UrlDecode(ffmpegUri.Segments.Last());
-
-        // Create a new BlobClient from the provided connection string, container name, and blob name
-        BlobClient blobClient = new BlobClient(_secretsConfiguration.AzureConnectionStringStorageAccountKey, "finalfiles", blobName);
-
-        // Generate a unique directory name for the new folder
-        string uniqueDirectoryName = Path.GetTempFileName();
-        Directory.CreateDirectory(uniqueDirectoryName); // This ensures the directory is created
-
-        // Combine the unique directory with the blob name to get the full file path
-        string ffmpegFilePath = Path.Combine(uniqueDirectoryName, blobName);
-
-        // Download the blob to the ffmpegFilePath
-        await blobClient.DownloadToAsync(ffmpegFilePath);
-
-        // Return the full path to ffmpeg.exe
-        return ffmpegFilePath;
-    }
-
-
-
-    public async Task<string> DownloadFFMpegExecutable()
-    {
-        string containerName = "finalfiles";
-        Uri blobUri = new Uri("https://socialflowstorageaccount.blob.core.windows.net/finalfiles/ffmpeg.exe?sp=r&st=2024-03-08T14:47:14Z&se=2033-06-01T21:47:14Z&spr=https&sv=2022-11-02&sr=b&sig=c01Q2Gl481tRR43ZkVXK5%2B%2Fyqv53cg2LfzthLoSLJwM%3D");
-
-        // Extract the blob name from the URI
-        string blobName = WebUtility.UrlDecode(blobUri.Segments.Last());
-
-        // Create a new BlobClient from the provided connection string, container name, and blob name
-        BlobClient blobClient = new BlobClient(_secretsConfiguration.AzureConnectionStringStorageAccountKey, containerName, blobName);
-
-        // Generate a unique file path for the temporary file
-        string tempFilePath = Path.GetTempFileName();
-        tempFilePath = Path.ChangeExtension(tempFilePath, ".exe");
-
-        // Download the blob to the temporary file
-        await blobClient.DownloadToAsync(tempFilePath);
-
-        // Return the path to the temporary file
-        return tempFilePath;
-    }
+  
 
     public async Task<string> GenerateBlobSasTokenAsync(Uri blobUri)
 {

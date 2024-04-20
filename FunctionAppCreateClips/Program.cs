@@ -39,14 +39,10 @@ var host = new HostBuilder()
 
 
 var secretsConfig = host.Services.GetRequiredService<ISecretsConfiguration>();
-var blobconfig = host.Services.GetRequiredService<IAzureStorageService>();
 await secretsConfig.LoadSecretsAsync();
 
-secretsConfig.FFMPEG_FOLDER = "C:\\home\\site\\wwwroot\\Xtra_Dependencies\\FFMPEG";
 secretsConfig.FFMPEGExecutable_path = "C:\\home\\site\\wwwroot\\Xtra_Dependencies\\FFMPEG\\ffmpeg.exe";
 
-//secretsConfig.FFMPEG_FOLDER = "C:\\Users\\ardab\\OneDrive\\Bureaublad\\FunctionAppBlitzVideo\\Xtra_Dependencies\\FFMPEG";
-//secretsConfig.FFMPEGExecutable_path = "C:\\Users\\ardab\\OneDrive\\Bureaublad\\FunctionAppBlitzVideo\\Xtra_Dependencies\\FFMPEG\\ffmpeg.exe";
 
 
 host.Run();
