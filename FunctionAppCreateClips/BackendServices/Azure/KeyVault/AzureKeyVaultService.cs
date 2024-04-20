@@ -43,7 +43,7 @@ using Azure.Security.KeyVault.Secrets;
 
     public static async Task<string> SetExtraJwtTokenEncryption()
     {
-      
+      string a = "sz";
         var secretName = "SystemSecretKeySecurelyExtraEncryptJwtTokenHex";
         string secretValue = Environment.GetEnvironmentVariable(secretName);
 
