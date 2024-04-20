@@ -17,7 +17,7 @@ using Azure.Security.KeyVault.Secrets;
 
     public static async Task<string> SetAzureConnectionStringStorageAccountKey()
     {
-        var secretName = "AzureConnectionStringStorageAccount";
+        var secretName = "AzureConnectinoStringStorageAccount";
         string secretValue = Environment.GetEnvironmentVariable(secretName);
 
         if (string.IsNullOrEmpty(secretValue))
@@ -30,7 +30,7 @@ using Azure.Security.KeyVault.Secrets;
 
     public static async Task<string> SetMainJWTTokenKey()
     {
-        var secretName = "SystemSecretKeyJwtEncryption";
+        var secretName = "SystemSecretKeyJwtEncrption";
         string secretValue = Environment.GetEnvironmentVariable(secretName);
 
         if (string.IsNullOrEmpty(secretValue))
@@ -43,7 +43,7 @@ using Azure.Security.KeyVault.Secrets;
 
     public static async Task<string> SetExtraJwtTokenEncryption()
     {
-      string a = "szdsfs";
+     
         var secretName = "SystemSecretKeySecurelyExtraEncryptJwtTokenHex";
         string secretValue = Environment.GetEnvironmentVariable(secretName);
 
