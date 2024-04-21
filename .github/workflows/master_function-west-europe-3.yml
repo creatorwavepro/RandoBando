@@ -16,7 +16,6 @@ env:
 jobs:
   build-and-deploy:
     runs-on: windows-latest
-    
     steps:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v4
@@ -32,7 +31,7 @@ jobs:
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
           dotnet build --configuration Release --output ./output
           popd
-      
+
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
         id: fa
@@ -40,4 +39,4 @@ jobs:
           app-name: 'FUNCTION-WEST-EUROPE-3'
           slot-name: 'Production'
           package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9079D665BFB74931AAC904B05A8CCE89 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_08B328C5E9934513855DE4BF121C54C3 }}
