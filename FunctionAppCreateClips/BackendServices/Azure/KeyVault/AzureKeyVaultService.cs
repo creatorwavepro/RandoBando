@@ -30,7 +30,7 @@ using Azure.Security.KeyVault.Secrets;
 
     public static async Task<string> SetMainJWTTokenKey()
     {
-        string s = "sdsds";
+        string s = "sdsdfdss";
         var secretName = "SystemSecretKeyJwtEncryption";
         string secretValue = Environment.GetEnvironmentVariable(secretName);
 
