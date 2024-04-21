@@ -39,4 +39,4 @@ jobs:
           app-name: 'FUNCTION-WEST-EUROPE-2'
           slot-name: 'Production'
           package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2DD845D2F1CE4AF883998B395CB9529F }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CB98EA079239443C8A698805012724E7 }}
