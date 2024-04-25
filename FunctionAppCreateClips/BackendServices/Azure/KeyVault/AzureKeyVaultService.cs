@@ -28,6 +28,21 @@ using Azure.Security.KeyVault.Secrets;
         return secretValue;
     }
 
+    public static async Task<string> SetAzureKeyvaultUrl()
+    {
+        var secretName = "AzureKeyvaultUrl";
+        string secretValue = Environment.GetEnvironmentVariable(secretName);
+
+        if (string.IsNullOrEmpty(secretValue))
+        {
+            return "Environment variable not found for " + secretName;
+        }
+
+        return secretValue;
+    }
+
+
+
     public static async Task<string> SetMainJWTTokenKey()
     {
         string s = "sdsdfdss";

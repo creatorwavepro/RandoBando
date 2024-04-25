@@ -11,6 +11,7 @@ public interface ISecretsConfiguration
     string ExtraJwtTokenEncryption { get; }
     string FFMPEGExecutable_path { get; set; }
 
+
     Task LoadSecretsAsync();
 }
 public class SecretsConfiguration : ISecretsConfiguration
@@ -26,6 +27,7 @@ public class SecretsConfiguration : ISecretsConfiguration
     public string MainJWTTokenKey { get; private set; }
     public string ExtraJwtTokenEncryption { get; private set; }
     public string FFMPEGExecutable_path { get;  set; }
+
 
 
 
@@ -46,19 +48,22 @@ public class SecretsConfiguration : ISecretsConfiguration
         Task<string> azureConnectionStringStorageAccountKeyTask = AzureKeyVaultServices.SetAzureConnectionStringStorageAccountKey();
         Task<string> mainJWTTokenKeyTask = AzureKeyVaultServices.SetMainJWTTokenKey();
         Task<string> extraJwtTokenEncryptionTask = AzureKeyVaultServices.SetExtraJwtTokenEncryption();
+        Task<string> KevaultUrl = AzureKeyVaultServices.SetAzureKeyvaultUrl();
 
      
         // Await all tasks to complete
         await Task.WhenAll(
             azureConnectionStringStorageAccountKeyTask,
             mainJWTTokenKeyTask,
-            extraJwtTokenEncryptionTask
+            extraJwtTokenEncryptionTask,
+            KevaultUrl
         );
 
         // Assign results to corresponding properties
         AzureConnectionStringStorageAccountKey = await azureConnectionStringStorageAccountKeyTask;
         MainJWTTokenKey = await mainJWTTokenKeyTask;
         ExtraJwtTokenEncryption = await extraJwtTokenEncryptionTask;
+ 
 
 
 
