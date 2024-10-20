@@ -19,7 +19,7 @@ using Azure.Security.KeyVault.Secrets;
         // Replace <Your-Secret-Name> with the name of the secret that holds the storage account connection string
         try
         {
-
+            int a = 0;
 
             var secretValue = Environment.GetEnvironmentVariable("StabilityAIpassword");
         

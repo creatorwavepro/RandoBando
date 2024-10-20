@@ -327,6 +327,7 @@ namespace FunctionAppCreateClips
         [Function("StabilityAIEndpoint")]
         public async Task<IActionResult> StabilityAIEndpoint([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req)
         {
+            string s = "";
             _logger.LogInformation("C# HTTP trigger function processing a request.");
             _logger.LogWarning("st password : " + _secretsConfiguration.StabilityAIAPIKey);
 
