@@ -29,6 +29,8 @@ public interface IVideoCreationServices
 
 
 
+
+
 }
 
 public class VideoCreationServices : IVideoCreationServices
@@ -47,6 +49,24 @@ public class VideoCreationServices : IVideoCreationServices
         _secretsConfiguration = secretsConfiguration;
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public async Task<string> SaveAndJoinAudioSegmentsAsync(List<string> tempFilePaths)
     {
@@ -161,62 +181,7 @@ public class VideoCreationServices : IVideoCreationServices
 
     }
 
-    //public async Task<string> CreateClips(string imagePath, string sentence, double speedPerWord)
-    //{
-    //    await Console.Out.WriteLineAsync("creating clip for image : " + imagePath);
-    //    await Console.Out.WriteLineAsync("creating clip for SENTENCE : " + sentence);
-    //    await Console.Out.WriteLineAsync("creating clip for speedPerWord : " + speedPerWord);
-
-    //    try
-    //    {
-    //        // Validate input parameters
-    //        if (string.IsNullOrEmpty(imagePath) || string.IsNullOrEmpty(sentence))
-    //        {
-    //            Console.WriteLine("Invalid image path or sentence.");
-    //            return string.Empty; // Return an empty string if the inputs are not valid
-    //        }
-
-    //        // Calculate duration based on the sentence and speed per word
-    //        int duration = Math.Max(1, (int)Math.Round(CountWords(sentence) * speedPerWord));
-
-    //        string videoPath = null;
-    //        int retryCount = 0;
-    //        int maxRetries = 5;
-    //        int backoffDelay = 2000; // Initial backoff delay in milliseconds
-
-    //        // Retry logic with exponential backoff
-    //        while (string.IsNullOrEmpty(videoPath) && retryCount < maxRetries)
-    //        {
-    //            if (retryCount > 0)
-    //            {
-    //                await Console.Out.WriteLineAsync($"Retrying... Attempt {retryCount}");
-    //                await Task.Delay(backoffDelay);
-    //                backoffDelay *= 2; // Double the backoff delay for the next attempt
-    //            }
-
-    //            videoPath = await GenerateVideoFromImageAndStoreLocally(imagePath, duration);
-    //            retryCount++;
-    //        }
-
-    //        if (!string.IsNullOrEmpty(videoPath))
-    //        {
-    //            Console.WriteLine("Video has been made: " + videoPath);
-    //            return videoPath; // Return the path for the created video
-    //        }
-    //        else
-    //        {
-    //            await Console.Out.WriteLineAsync("THERE WAS AN ERROR <while creating video> (((((àààààà)))))))");
-    //            return string.Empty; // Return an empty string if an exception occurred
-    //        }
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        // Log the exception details to help with debugging
-    //        Console.WriteLine($"An error occurred: {ex.Message}");
-    //        return string.Empty; // Return an empty string if an exception occurred
-    //    }
-    //}
-
+  
 
 
     public int CountWords(string sentence)
@@ -231,240 +196,7 @@ public class VideoCreationServices : IVideoCreationServices
 
 
 
-    //public async Task<string> GenerateVideoFromImageAndStoreLocally(string inputPath, int duration)
-    //{
-    //    int maxAttempts = 3;
-    //    int attempt = 0;
-
-    //    while (attempt < maxAttempts)
-    //    {
-    //        try
-    //        {
-    //            // Adjust speed based on duration
-    //            int speed = 1;
-    //            switch (duration)
-    //            {
-    //                case 1: speed = 5; break;
-    //                case 2: speed = 4; break;
-    //                case 3: speed = 3; break;
-    //                case 4: speed = 2; break;
-    //            }
-
-    //            // Generate a unique file name for the output video in the system's temporary directory
-    //            string outputPath = Path.GetTempFileName();
-    //            outputPath = Path.ChangeExtension(outputPath, ".mp4");
-
-    //            if (File.Exists(outputPath))
-    //            {
-    //                File.Delete(outputPath);
-    //            }
-
-    //            // Construct the FFmpeg command with the output path
-    //            string ffmpegCommand = $"-y -loop 1 -i \"{inputPath}\" -c:v libx264 -t {duration} -pix_fmt yuv420p " +
-    //                                   $"-vf \"scale=3840:-2,zoompan=z='min(zoom+0.00{speed},1.5)':d={duration * 50}:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':fps=50\" " +
-    //                                   $"-preset veryslow -crf 30 \"{outputPath}\"";
-
-    //            // Log the command being executed
-    //            Console.WriteLine($"Executing FFmpeg command: {ffmpegCommand}");
-
-    //            // Execute FFmpeg command
-    //            using (var process = new Process())
-    //            {
-    //                process.StartInfo.FileName = _secretsConfiguration.FFMPEGExecutable_path; // Ensure FFmpeg is accessible in the system's PATH
-    //                process.StartInfo.Arguments = ffmpegCommand;
-    //                process.StartInfo.RedirectStandardOutput = true;
-    //                process.StartInfo.RedirectStandardError = true;
-    //                process.StartInfo.UseShellExecute = false;
-    //                process.StartInfo.CreateNoWindow = true;
-    //                process.Start();
-
-    //                // Asynchronously read the output to ensure the process does not block
-    //                string output = await process.StandardOutput.ReadToEndAsync();
-    //                string error = await process.StandardError.ReadToEndAsync();
-
-    //                process.WaitForExit();
-
-    //                if (process.ExitCode != 0)
-    //                {
-    //                    // Handle error case
-    //                    Console.WriteLine($"FFmpeg command failed with exit code {process.ExitCode}. Error: {error}");
-    //                    attempt++;
-    //                    continue;
-    //                }
-
-
-    //                string uriWithSas = "";
-    //                string videoname = $"clips-{Guid.NewGuid()}.mp4";
-    //                try
-    //                {
-
-    //                    Uri uri = await _azurestorageservice.UploadVideoToBlobAsyncInChunks(outputPath, videoname, "finalfiles");
-
-    //                    string sas = await _azurestorageservice.GenerateBlobSasTokenAsync(uri);
-
-    //                    uriWithSas = $"{uri}{sas}";
-    //                }
-    //                catch (Exception e)
-    //                {
-    //                    await Console.Out.WriteLineAsync("An error occurred making FFmpeg request: " + e.Message);
-    //                    throw;
-    //                }
-
-    //                if (!string.IsNullOrEmpty(uriWithSas))
-    //                {
-    //                    return uriWithSas;
-    //                }
-
-    //                // Command executed successfully, return the output path
-    //                return outputPath;
-    //            }
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            Console.WriteLine($"Attempt {attempt + 1} failed: {ex.Message}. Retrying...");
-    //            attempt++;
-    //            if (attempt >= maxAttempts)
-    //            {
-    //                Console.WriteLine("Maximum retry attempts reached. Failing operation.");
-    //                throw; // Consider handling this case more gracefully
-    //            }
-    //        }
-    //    }
-
-    //    // This line is only reached if all retries fail
-    //    throw new Exception("Failed to generate video from image after multiple attempts.");
-    //}
-
-
-
-    // public async Task<string> GenerateVideoFromImageAndStoreLocally(string inputPath, int duration)
-    // {
-    //     int maxAttempts = 3;
-    //     int attempt = 0;
-
-    //     while (attempt < maxAttempts)
-    //     {
-    //         try
-
-    //         {
-
-    //             // Adjust speed based on duration
-    //             int speed = 1;
-    //             switch (duration)
-    //             {
-    //                 case 1: speed = 28; break;
-    //                 case 2: speed = 25; break;
-    //                 case 3: speed = 23; break;
-    //                 case 4: speed = 2; break;
-    //             }
-
-    //             string videoOutputPath = Path.GetTempFileName();
-    //             videoOutputPath = Path.ChangeExtension(videoOutputPath, ".mp4");
-
-    //             Random rand = new Random();
-    //             int num = rand.Next(0, 4);
-
-
-
-    //             string ffmpegCommand = "";
-
-    //             switch (num)
-    //             {
-    //                 case 0:  // Construct the FFmpeg command with the output path
-    //                     ffmpegCommand = $"-y -loop 1 -i \"{inputPath}\" -c:v libx264 -t {duration} -pix_fmt yuv420p " +
-    //                                            $"-vf \"scale=3840:-2,zoompan=z='min(zoom+0.00{speed},1.5)':d={duration * 50}:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':fps=50\" " +
-    //                                            $"-preset veryslow -crf 30 \"{videoOutputPath}\""; break;
-    //                 case 1:  // Construct the FFmpeg command
-    //                     ffmpegCommand = $"-y -loop 1 -i \"{inputPath}\" -c:v libx264 -t {duration} -pix_fmt yuv420p " +
-    //                                          $"-vf \"scale=3840:-2,zoompan=z='if(lte(zoom,1.0),1.5,max(1.001,zoom-0.00{speed}))':d={duration * 50}:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':fps=50\" " +
-    //                                          $"-preset veryslow -crf 30 \"{videoOutputPath}\""; break;
-    //                 case 2:
-    //                     ffmpegCommand = $"-y -loop 1 -i \"{inputPath}\" -c:v libx264 -t {duration} -pix_fmt yuv420p " +
-    //                $"-vf \"scale=3840:-2,zoompan=z='if(lte(zoom,1.0),1.5,max(1.001,zoom-0.00{speed})):d={duration * 50}:" +
-    //                $"x='if(lte(zoom\\,1.0)\\,0\\,min(iw/2-(iw/zoom/2)\\,((iw/zoom)-iw)*((zoom-1)/(1.5-1))*on/(5*50)))':" + // Correctly escaped for C# string
-    //                $"y='ih/2-(ih/zoom/2)':fps=50\" " +
-    //                $"-preset veryslow -crf 30 \"{videoOutputPath}\"";
-    //                     break;
-    //                 case 3:
-    //                     ffmpegCommand = $"-y -loop 1 -i \"{inputPath}\" -c:v libx264 -t {duration} -pix_fmt yuv420p " +
-    //$"-vf \"scale=3840:-2,zoompan=z='if(lte(zoom,1.0),1.5,max(1.001,zoom-0.00{speed})):d={duration * 50}:" +
-    //$"x='if(lte(zoom\\,1.0)\\,iw-iw/zoom\\,max(0\\,(iw/2-(iw/zoom/2))-((iw/zoom)-iw)*((zoom-1)/(1.5-1))*on/(5*50)))':" + // Adjusted for right to left panning
-    //$"y='ih/2-(ih/zoom/2)':fps=50\" " +
-    //$"-preset veryslow -crf 30 \"{videoOutputPath}\"";
-    //                     break;
-    //                 default:
-    //                     // Construct the FFmpeg command
-    //                     ffmpegCommand = $"-y -loop 1 -i \"{inputPath}\" -c:v libx264 -t {duration} -pix_fmt yuv420p " +
-    //                                          $"-vf \"scale=3840:-2,zoompan=z='if(lte(zoom,1.0),1.5,max(1.001,zoom-0.00{speed}))':d={duration * 50}:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':fps=50\" " +
-    //                                          $"-preset veryslow -crf 30 \"{videoOutputPath}\"";
-    //                     break;
-    //             }
-
-
-
-
-
-
-    //             //string ffmpegCommand = $"-y -loop 1 -i \"{inputPath}\" -vf \"scale=3840:-2,zoompan=z='if(lte(zoom,1.0),1.5,max(1.001,zoom-0.00{speed}))':d={duration * 50}:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':fps=50\" -c:v libx264 -t {duration} -crf 30 \"{videoOutputPath}\"";
-
-    //             await Console.Out.WriteLineAsync("following command <begin>" + ffmpegCommand + "<end>");
-
-    //             string result = await _videoProcessingService.ExecuteFfmpegCommandAsync(ffmpegCommand);
-
-
-    //             if (result != "")
-    //             {
-    //                 return result;
-    //             }
-    //             //ProcessStartInfo startInfo = new ProcessStartInfo(_secretsConfiguration.FFMPEGExecutable_path)
-    //             //{
-    //             //    Arguments = ffmpegCommand,
-    //             //    RedirectStandardOutput = true,
-    //             //    RedirectStandardError = true,
-    //             //    UseShellExecute = false,
-    //             //    CreateNoWindow = true
-    //             //};
-
-    //             //using (Process process = new Process { StartInfo = startInfo })
-    //             //{
-    //             //    process.Start();
-    //             //    process.BeginOutputReadLine();
-    //             //    process.BeginErrorReadLine();
-    //             //    await process.WaitForExitAsync();
-    //             //}
-
-    //             //string videBlobName = $"clip-{Guid.NewGuid()}.mp4";
-    //             //Uri uri = await _azurestorageservice.UploadVideoToBlobAsyncInChunks(videoOutputPath, videBlobName, "finalfiles");
-    //             //if (uri != null)
-    //             //{
-    //             //    string sas = await _azurestorageservice.GenerateBlobSasTokenAsync(uri);
-    //             //    await Console.Out.WriteLineAsync("uri is null ");
-    //             //    string RealOutput = $"{uri}{sas}";
-    //             //    // Return the cloud path of the generated video file if successful
-    //             //    return RealOutput;
-
-    //             //}
-    //             attempt++;
-
-
-    //         }
-    //         catch (Exception ex)
-    //         {
-    //             Debug.WriteLine($"Attempt {attempt + 1} failed: {ex.Message}");
-    //             attempt++;
-
-    //             if (attempt >= maxAttempts)
-    //             {
-    //                 Debug.WriteLine("Maximum retry attempts reached, failing operation.");
-    //                 return null; // Or throw the last exception
-    //             }
-    //         }
-    //     }
-
-    //     return null; // This should not be reached, but it's here to satisfy the compiler.
-    // }
-
-
+  
     public async Task<string> GenerateVideoFromImageAndStoreLocally(string ffmpegCommand)
     {
         int maxAttempts = 3;

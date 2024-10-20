@@ -1,9 +1,10 @@
 
-using Google.Protobuf.WellKnownTypes;
+
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
 
 
 
@@ -26,6 +27,8 @@ var host = new HostBuilder()
         services.AddScoped<IJwtTokenServices, JwtTokenServices>();
         services.AddScoped<IVideoCreationServices, VideoCreationServices>();
         services.AddSingleton<ISecretsConfiguration, SecretsConfiguration>();
+        services.AddSingleton<IStabilityAIServices, StabilityAIServices>();
+
 
 
         services.AddHttpClient("MyCustomHttpClient", client =>
